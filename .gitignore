@@ -1,3 +1,18 @@
+#
+# Eclipse
+#
+.project
+.settings/
+
+#
+# Editor droppings
+#
+*~
+*.bak
+
+#
+# Erlang
+#
 .eunit
 deps
 *.o
