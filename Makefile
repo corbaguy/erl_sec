@@ -16,9 +16,9 @@
 
 # Author:     Ted Burghart
 # Version:    0.0.0
-# Revision:   0   2014-11-07T21:33:17Z
+# Revision:   1   2014-11-07T21:33:17Z
 
-REBAR=rebar -vv
+REBAR	?= rebar
 
 compile:
 	$(REBAR) compile
