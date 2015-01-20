@@ -1,5 +1,6 @@
+# --------------------------------------------------------------------
 #
-# Copyright 2014 Basho Technologies, Inc.
+# Copyright (c) 2014,2015 Basho Technologies, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,16 +14,39 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-# Author:     Ted Burghart
-# Version:    0.0.0
-# Revision:   1   2014-11-07T21:33:17Z
+# --------------------------------------------------------------------
 
 REBAR	?= rebar
 
-compile:
+PRJDIR	:= $(dir $(lastword $(MAKEFILE_LIST)))
+
+OTPVSN	:= $(shell erl -noshell -eval \
+	'io:fwrite("~s",[erlang:system_info(otp_release)]), halt().')
+
+PLTFILE	:= $(PRJDIR)dialyzer_$(OTPVSN).plt
+
+compile ::
 	$(REBAR) compile
 
-clean:
+clean ::
 	$(REBAR) clean
+
+test ::
+	$(REBAR) eunit
+
+docs ::
+	$(REBAR) skip_deps=true doc
+
+dialyzer :: $(PLTFILE) compile
+	dialyzer --plt $(PLTFILE) \
+		--quiet \
+		-Wunmatched_returns \
+		-Werror_handling \
+		-Wrace_conditions \
+		-Wunderspecs \
+		ebin
+
+$(PLTFILE) :
+	dialyzer --build_plt --output_plt $(PLTFILE) --apps \
+		erts kernel stdlib crypto asn1 public_key ssl sasl
 

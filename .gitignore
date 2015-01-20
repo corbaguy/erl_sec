@@ -1,8 +1,10 @@
 #
-# Eclipse
+# IDEs
 #
 .project
 .settings/
+*.iml
+.idea/
 
 #
 # Editor droppings
@@ -13,13 +15,19 @@
 #
 # Erlang
 #
-.eunit
-deps
+.eunit/
+deps/
 *.o
 *.beam
 *.plt
 erl_crash.dump
-ebin
+ebin/
 rel/example_project
 .concrete/DEV_MODE
-.rebar
+.rebar/
+
+#
+# Local
+#
+old/
+doc/

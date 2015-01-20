@@ -19,35 +19,23 @@
 %% -------------------------------------------------------------------
 
 %%  The trailing number is random, it exists only to avoid guard conflicts.
--ifndef(LOCAL_DEFS_HRL_INCLUDED_77238).
--define(LOCAL_DEFS_HRL_INCLUDED_77238, true).
+-ifndef(X509_HRL_INCLUDED_66522).
+-define(X509_HRL_INCLUDED_66522, true).
 
--ifdef(NOTEST).
--undef(TEST).
--endif. % NOTEST
--ifdef(TEST).
--compile([export_all]).
--include_lib("eunit/include/eunit.hrl").
--else.
--compile([warn_export_all]).
--endif. % TEST
+%%  The point at which a two-digit year pivots from after to before, relative
+%%  to the current year. IOW, if a two-digit year is greater than the current
+%%  year + this value, then it is interpretted in the prior century.
+-define(X509_TWO_DIGIT_YEAR_PIVOT, 20).
 
--ifdef(NODEBUG).
--undef(DEBUG).
--endif. % NODEBUG
--ifdef(DEBUG).
--compile([debug_info]).
--endif. % DEBUG
+%%  The offset, in seconds, between the calendar:gregorian_xxx epoch (in UTC)
+%%  and the POSIX epoch (1-Jan-1970 00:00:00 UTC).
+%%  Some X.509 operations are implemented in terms of POSIX time.
+-define(X509_GSECS_POSIX_OFF, 62167219200).
 
--ifdef(DEBUG).
--define(DebugFmt(Fmt, Vals),
-        io:fwrite("==> ~s:~w: " ++ Fmt ++ "~n",
-            [?MODULE, ?LINE] ++ (Vals))).
--else.
--define(DebugFmt(Fmt, Vals), ok).
--endif. % DEBUG
--define(DebugLoc(),     ?DebugFmt("<==", [])).
--define(DebugMsg(Msg),  ?DebugFmt("~s", [(Msg)])).
--define(DebugVar(Var),  ?DebugFmt("~s = ~p", [??Var, (Var)])).
+%%  Convert from Gregorian to POSIX seconds.
+-define(x509_gsecs_to_posix(GS), (GS - ?X509_GSECS_POSIX_OFF)).
 
--endif. % LOCAL_DEFS_HRL_INCLUDED_77238
+%%  Convert from POSIX to Gregorian seconds.
+-define(x509_posix_to_gsecs(PS), (PS + ?X509_GSECS_POSIX_OFF)).
+
+-endif. % X509_HRL_INCLUDED_66522

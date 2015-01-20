@@ -19,35 +19,12 @@
 %% -------------------------------------------------------------------
 
 %%  The trailing number is random, it exists only to avoid guard conflicts.
--ifndef(LOCAL_DEFS_HRL_INCLUDED_77238).
--define(LOCAL_DEFS_HRL_INCLUDED_77238, true).
+-ifndef(X509_CA_HRL_INCLUDED_67632).
+-define(X509_CA_HRL_INCLUDED_67632, true).
 
--ifdef(NOTEST).
--undef(TEST).
--endif. % NOTEST
--ifdef(TEST).
--compile([export_all]).
--include_lib("eunit/include/eunit.hrl").
--else.
--compile([warn_export_all]).
--endif. % TEST
+-define(X509_CA_APP, x509_ca).
+-define(X509_CA_IMPL_APP, x509_ca_impl).
+-define(X509_CA_IMPL_DEFAULT, x509_ca_openssl).
 
--ifdef(NODEBUG).
--undef(DEBUG).
--endif. % NODEBUG
--ifdef(DEBUG).
--compile([debug_info]).
--endif. % DEBUG
 
--ifdef(DEBUG).
--define(DebugFmt(Fmt, Vals),
-        io:fwrite("==> ~s:~w: " ++ Fmt ++ "~n",
-            [?MODULE, ?LINE] ++ (Vals))).
--else.
--define(DebugFmt(Fmt, Vals), ok).
--endif. % DEBUG
--define(DebugLoc(),     ?DebugFmt("<==", [])).
--define(DebugMsg(Msg),  ?DebugFmt("~s", [(Msg)])).
--define(DebugVar(Var),  ?DebugFmt("~s = ~p", [??Var, (Var)])).
-
--endif. % LOCAL_DEFS_HRL_INCLUDED_77238
+-endif. % X509_CA_HRL_INCLUDED_67632
